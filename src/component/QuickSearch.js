@@ -69,9 +69,7 @@ const QuickSearch = () => {
    return (
       <div>
          {reload ? <LoadingOverlay /> : null}
-         <motion.div className='p-3 rounded-lg shadow-lg' initial='hidden' animate='visible' exit='hidden' transition={{ type: "spring", stiffness: 200, damping: 20 }}>
-            <h2 className='text-base text-center font-medium text-gray-600 mb-4'>Quick Search</h2>
-
+         <motion.div className='p-1 rounded-lg shadow-lg' initial='hidden' animate='visible' exit='hidden' transition={{ type: "spring", stiffness: 200, damping: 20 }}>
             {imageSrc !== "" ? (
                <div className='flex flex-wrap space-x-2'>
                   <img src={imageSrc} alt='Pasted Screenshot' className='w-8 h-8 border rounded mb-2' />
@@ -80,7 +78,7 @@ const QuickSearch = () => {
                <div></div>
             )}
 
-            <div className='relative mb-4'>
+            <div className='relative'>
                <motion.input
                   type='text'
                   value={content}
@@ -88,25 +86,25 @@ const QuickSearch = () => {
                   onPaste={(e) => {
                      handlePaste(e);
                   }}
+                  onKeyDown={(e) => {
+                     if (e.key === "Enter") {
+                        handleSearch(content, imageSrc);
+                     }
+                  }}
                   placeholder='Enter anything you want to search'
-                  className='w-full p-2 border rounded focus:outline-none'
+                  className='w-full p-0.5 border rounded focus:outline-none'
                />
 
                <button
                   onClick={() => {
                      handleSearch(content, imageSrc);
                   }}
-                  className='absolute right-0 h-full bg-green-300 text-white p-2 rounded hover:bg-green-500'>
-                  Search
+                  className='absolute right-0 h-full bg-gray-100 text-white p-0.5 rounded'>
+                  search
                </button>
             </div>
 
-            {answer !== "" ? (
-               <div className=''>
-                  <h2 className='text-base text-center font-medium text-gray-600 mb-2'>Answer</h2>
-                  <div className='h-12 overflow-y-auto scrollbar-thumb-rounded'>{answer}</div>
-               </div>
-            ) : null}
+            {answer !== "" ? <div className='h-10 overflow-y-auto scrollbar-thumb-rounded'>{answer}</div> : null}
          </motion.div>
       </div>
    );
